@@ -2,59 +2,61 @@ const Joi = require('joi')
 
 const {validator} = require("../helper/response")
 
-const schemaLogin = Joi.object().keys({
+const schemaAddBarang = Joi.object().keys({
   email : Joi.string().email().required(),
-  password : Joi.string().min(8).required()
-})
-
-const middleLogin = (req, res, next) => {
-  const {error, value} = schemaLogin.validate(req?.body)
-  validator(req, res, next, error, value)
-}
-
-const schemaRegister = Joi.object().keys({
   name : Joi.string().required(),
-  email : Joi.string().email().required(),
-  password : Joi.string().min(8).required(),
-  password_confirmation : Joi.string().min(8).required()
+  desc : Joi.string().max(200).required(),
+  price : Joi.number().required(),
+  stock : Joi.number().required(),
+  foto : Joi.any().required(),
+  detail : Joi.object().optional()
 })
 
-const middleRegister = (req, res, next) => {
-  const {error, value} = schemaRegister.validate(req?.body)
+const middleAddBarang = (req, res, next) => {
+  const {error, value} = schemaAddBarang.validate(req?.body)
   validator(req, res, next, error, value)
 }
 
-const schemaGetAsset = Joi.object().keys({
-  email : Joi.string().email().required(),  
-})
-
-const middleGetAsset = (req, res, next) => {
-  const {error, value} = schemaGetAsset.validate(req?.params)
-  validator(req, res, next, error, value)
-}
-
-const schemaTarikAsset = Joi.object().keys({
-  email : Joi.string().email().required(),  
-  saldo : Joi.number().required()
-})
-
-const middleTarikAsset = (req, res, next) => {
-  const {error, value} = schemaTarikAsset.validate(req?.body)
-  validator(req, res, next, error, value)
-}
-
-const schemaEditProfile = Joi.object().keys({
-  email : Joi.string().email().required(),  
+const schemaEditBarang = Joi.object().keys({
+  id : Joi.string().required(),
   name : Joi.string().required(),
-  provinsi : Joi.string().optional(),
-  kota : Joi.string().optional(),
-  kecamatan : Joi.string().optional(),
-  foto : Joi.any().optional()
+  desc : Joi.string().max(200).required(),
+  price : Joi.number().required(),
+  stock : Joi.number().required(),
+  foto : Joi.any().required(),
+  detail : Joi.object().optional()
 })
 
-const middleEditProfile = (req, res, next) => {    
-  const {error, value} = schemaEditProfile.validate(req?.body)
+const middleEditBarang = (req, res, next) => {
+  const {error, value} = schemaEditBarang.validate(req?.body)
   validator(req, res, next, error, value)
 }
 
-module.exports = {middleLogin, middleRegister, middleGetAsset, middleTarikAsset, middleEditProfile}
+const schemaDeleteBarang = Joi.object().keys({
+  id : Joi.string().required()
+})
+
+const middleDeleteBarang = (req, res, next) => {
+  const {error, value} = schemaDeleteBarang.validate(req?.params)
+  validator(req, res, next, error, value)
+}
+
+const schemaGetAllBarang = Joi.object().keys({
+  email : Joi.string().email().required()
+})
+
+const middleGetAllBarang = (req, res, next) => {
+  const {error, value} = schemaGetAllBarang.validate(req?.params)
+  validator(req, res, next, error, value)
+}
+
+const schemaGetDetailBarang = Joi.object().keys({
+  id : Joi.string().required()
+})
+
+const middleGetDetailBarang = (req, res, next) => {
+  const {error, value} = schemaGetDetailBarang.validate(req?.params)
+  validator(req, res, next, error, value)
+}
+
+module.exports = {middleAddBarang, middleEditBarang, middleDeleteBarang, middleGetAllBarang, middleGetDetailBarang}
