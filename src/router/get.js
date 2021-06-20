@@ -1,17 +1,26 @@
 const express = require("express")
-const { getAssetController } = require("../controller")
+const { getAllBarangController, getDetailBarangController } = require("../controller")
 const router = express.Router()
 
 const { sender } = require("../helper/response")
-const { middleGetAsset } = require("../middleware/rule")
+const { middleGetAllBarang, middleGetDetailBarang } = require("../middleware/rule")
 
-router.get("/asset/:email", middleGetAsset, async (req, res)=>{
-  const sta = await getAssetController(req?.validated)
+router.get("/barang/all/:email", middleGetAllBarang, async (req, res)=>{
+  const sta = await getAllBarangController(req?.validated)
   if(sta != null){
-    sender(res, 200, "Asset berhasil ditemukan", sta)
+    sender(res, 200, "Barang ditemukan", sta)
     return
-  }  
-  sender(res, 404, "Asset tidak ditemukan")
+  }
+  sender(res, 404, "Barang tidak ditemukan")
+})
+
+router.get("/barang/detail/:id", middleGetDetailBarang, async (req, res)=>{
+  const sta = await getDetailBarangController(req?.validated)
+  if(sta != null){
+    sender(res, 200, "Barang ditemukan", sta)
+    return
+  }
+  sender(res, 404, "Barang tidak ditemukan")
 })
 
 module.exports = router
