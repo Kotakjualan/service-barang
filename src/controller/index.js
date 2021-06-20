@@ -5,19 +5,19 @@ const moment = require('moment')
 const { ObjectID } = require("mongodb")
 
 const addBarangController = async (param) => {
-  if(param) return false
+  if(param == null) return false
   const optionSave = new Model.SaveOption()
   const tmp = {
     ...param,
     createdAt : moment().format("YYYY-MM-DD")
   }
-  optionSave.setData(tmp)
+  optionSave.setData(tmp)  
   const res = await mongo.saveOne(optionSave)
   return res
 }
 
 const getAllBarangController = async param => {
-  if(param) return []
+  if(param == null) return []  
   const option = new Model.FindOption()
   option.setFilter({email:param?.email})
   const data = await mongo.findAll(option)
@@ -26,7 +26,7 @@ const getAllBarangController = async param => {
 }
 
 const getDetailBarangController = async param => {
-  if(param) return null
+  if(param == null) return null
   const option = new Model.FindOption()
   option.setFilter({_id:new ObjectID(param?.id)})
   const data = await mongo.findOne(option)
@@ -35,16 +35,24 @@ const getDetailBarangController = async param => {
 }
 
 const editBarangController = async param => {
-  if(param) return false
+  if(param == null) return false
   const option = new Model.UpdateOption()
   option.setFilter({_id:new ObjectID(param?.id)})
-  option.setNewData(param)
+  const tmp = {
+    name:param?.name,
+    desc:param?.desc,
+    price:param?.price,
+    stock:param?.stock,
+    foto:param?.foto,
+    detail:param?.detail
+  } 
+  option.setNewData(tmp)
   const res = await mongo.updateOne(option)
   return res
 }
 
 const deleteBarangController = async param => {
-  if(param) return false
+  if(param == null) return false
   const option = new Model.DeleteOption()
   option.setFilter({_id:new ObjectID(param?.id)})
   const res = await mongo.deleteOne(option)

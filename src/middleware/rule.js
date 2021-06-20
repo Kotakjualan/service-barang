@@ -8,11 +8,11 @@ const schemaAddBarang = Joi.object().keys({
   desc : Joi.string().max(200).required(),
   price : Joi.number().required(),
   stock : Joi.number().required(),
-  foto : Joi.any().required(),
+  foto : Joi.any().optional(),
   detail : Joi.object().optional()
 })
 
-const middleAddBarang = (req, res, next) => {
+const middleAddBarang = (req, res, next) => {  
   const {error, value} = schemaAddBarang.validate(req?.body)
   validator(req, res, next, error, value)
 }
@@ -23,7 +23,7 @@ const schemaEditBarang = Joi.object().keys({
   desc : Joi.string().max(200).required(),
   price : Joi.number().required(),
   stock : Joi.number().required(),
-  foto : Joi.any().required(),
+  foto : Joi.any().optional(),
   detail : Joi.object().optional()
 })
 

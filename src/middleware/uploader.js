@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     cb(null, "foto1");
   }
 });
- 
+
 const uploadFileLocal = multer({ storage: storage }).single('foto')
 
 module.exports = {uploadFileLocal}

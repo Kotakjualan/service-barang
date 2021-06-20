@@ -11,9 +11,14 @@ const Delete = require("./src/router/delete")
 
 const {sender} = require("./src/helper/response")
 
+
 app.use(express.static(resolve(__dirname, 'img')))
-app.use(express.json())
 app.use(cors())
+
+app.use(express.json())
+app.use(express.urlencoded({
+  extended: true
+}))
 
 app.use("/v1/api", Get)
 app.use("/v1/api", Post)

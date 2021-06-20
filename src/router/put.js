@@ -8,13 +8,9 @@ const { uploadFileLocal } = require('../middleware/uploader')
 const { uploadCloud } = require('../helper/cloudinary')
 
 router.put("/barang", uploadFileLocal, middleEditBarang, async (req, res)=>{  
-
   const resUploadCloud = await uploadCloud("./img/foto1")
-
   req.validated.foto = resUploadCloud?.secure_url
-
-  const sta = await editBarangController(req?.validated)
-  
+  const sta = await editBarangController(req?.validated)  
   if(sta){
     sender(res, 200, "Update Barang Success")
     return
